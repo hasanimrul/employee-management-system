@@ -4,17 +4,17 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #082f4958;
+  --foreground: #0d1117;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0d1117;
+  --foreground: #ffffff;
 }
 
 body {
+  transition: background-color 0.3s, color 0.3s;
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
