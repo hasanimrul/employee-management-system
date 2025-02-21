@@ -10,7 +10,7 @@ const SidebarWeb = () => {
 
   return (
     <div
-      className="flex flex-col border border-t-0 border-dotted border-gray-300 dark:border-gray-700"
+      className=" flex flex-col border border-t-0 border-dotted border-gray-300 dark:border-gray-700"
     >
       <ul className="text-sm flex flex-col items-start gap-3  h-lvh pt-5 px-5">
         <li className="group w-full hover:bg-sky-800  rounded-md">

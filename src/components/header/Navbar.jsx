@@ -5,7 +5,7 @@ import styles from "./Header.module.css";
 
 const Navbar = ({theme, toggleTheme, toggle, isOpen}) => {
   return (
-    <div className="flex items-center justify-between border border-dotted border-gray-300 dark:border-gray-700 dark:hover:border-sky-800 rounded">
+    <div className=" flex items-center justify-between border border-dotted border-gray-300 dark:border-gray-700 dark:hover:border-sky-800 rounded z-50">
         <div className="flex items-center">
         <div data-aos="fade-down "
           id="menuToggle"
