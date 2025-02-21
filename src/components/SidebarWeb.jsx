@@ -3,24 +3,18 @@ import { ThemeContext } from "@/contexts/ThemeContext";
 import Link from "next/link";
 import React, { useContext } from "react";
 
-const Sidebar = ({ toggle, isOpen }) => {
+const SidebarWeb = () => {
   const { theme } = useContext(ThemeContext);
 
-  const sidebarStyle = {
-    opacity: isOpen ? "1" : "0",
-    left: isOpen ? "0" : "-100%",
-  };
 
 
   return (
     <div
-      style={sidebarStyle}
-      className="fixed top-20 flex flex-col border border-t-0 border-dotted border-gray-300 dark:border-gray-700 dark:hover:border-sky-800 rounded bg-[#0d1117] "
+      className="flex flex-col border border-t-0 border-dotted border-gray-300 dark:border-gray-700"
     >
-      
       <ul className="text-sm flex flex-col items-start gap-3  h-lvh pt-5 px-5">
         <li className="group w-full hover:bg-sky-800  rounded-md">
-          <Link href="/employee-card-view" className="flex items-center gap-2  w-full px-3 py-2">
+          <Link href="/employee-table-view" className="flex items-center gap-2  w-full px-3 py-2">
             <svg
               fill={theme === "dark" ? "#ffffff" : "#000000"}
               className="h-5 w-5"
@@ -48,7 +42,7 @@ const Sidebar = ({ toggle, isOpen }) => {
           </Link>
         </li>
         <li className="group w-full hover:bg-sky-800  rounded-md">
-          <Link href="/employee-table-view" className="flex items-center gap-2  w-full px-3 py-2">
+          <Link href="/employee-card-view" className="flex items-center gap-2  w-full px-3 py-2">
             <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none">
               <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
               <g
@@ -91,4 +85,4 @@ const Sidebar = ({ toggle, isOpen }) => {
   );
 };
 
-export default Sidebar;
+export default SidebarWeb;
