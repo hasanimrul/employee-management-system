@@ -44,15 +44,10 @@ const EmployeeForm = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (!file.type.startsWith("image/")) {
-        setErrors((prev) => ({ ...prev, image: "Only image files are allowed" }));
-        return;
-      }
-  
       // Convert the image to base64
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64Image = reader.result; // Get the base64 part (after comma)
+        const base64Image = reader.result; // Get the base64 string
         setEmployee((prev) => ({ ...prev, image: base64Image }));
         setPreview(URL.createObjectURL(file));  // Optional: For preview
         setErrors((prev) => ({ ...prev, image: "" }));
@@ -60,6 +55,7 @@ const EmployeeForm = () => {
       reader.readAsDataURL(file);  // Convert the image to base64
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
