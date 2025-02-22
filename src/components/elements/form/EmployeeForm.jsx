@@ -48,9 +48,16 @@ const EmployeeForm = () => {
         setErrors((prev) => ({ ...prev, image: "Only image files are allowed" }));
         return;
       }
-      setEmployee((prev) => ({ ...prev, image: file }));
-      setPreview(URL.createObjectURL(file));
-      setErrors((prev) => ({ ...prev, image: "" }));
+  
+      // Convert the image to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result; // Get the base64 part (after comma)
+        setEmployee((prev) => ({ ...prev, image: base64Image }));
+        setPreview(URL.createObjectURL(file));  // Optional: For preview
+        setErrors((prev) => ({ ...prev, image: "" }));
+      };
+      reader.readAsDataURL(file);  // Convert the image to base64
     }
   };
 
@@ -70,12 +77,13 @@ const EmployeeForm = () => {
     setApiError(""); 
     try {
       // Send POST request to your API endpoint
-      const response = await axios.post("/api/employees", formData, {
-        headers: {
-          "Content-Type": 'application/json', 
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post("/api/employees", formData);
+      // const response = await axios.post("/api/employees", formData, {
+      //   headers: {
+      //     "Content-Type": 'application/json', 
+      //   },
+      //   body: JSON.stringify(formData),
+      // });
       
       // Handle successful response
       console.log("Employee added successfully", response.data);

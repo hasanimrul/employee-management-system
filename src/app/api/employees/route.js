@@ -27,39 +27,70 @@ export async function GET() {
 }
 
 // POST: Add a new employee
-export async function POST(req) {
-    const db = await connectToDatabase();
+// export async function POST(req) {
+//     const db = await connectToDatabase();
     
-    // Parse the request body as JSON
-    const { name, email, mobile, address, image } = await req.json();  
+//     // Parse the request body as JSON
+//     const { name, email, mobile, address, image } = await req.json();  
   
-    let imageBase64 = "";
-    if (image) {
-      // If image is a base64 string, handle it directly
-      if (typeof image === "string") {
-        imageBase64 = `data:image/png;base64,${image}`;
-      }
-      // If image is a file object, handle it as file and convert it to base64
-      else if (image instanceof Blob) {
-        const buffer = await image.arrayBuffer();  // Convert file to ArrayBuffer
-        imageBase64 = `data:image/png;base64,${Buffer.from(buffer).toString("base64")}`;
-      }
-    }
+//     let imageBase64 = "";
+//     if (image) {
+//       // If image is a base64 string, handle it directly
+//       if (typeof image === "string") {
+//         imageBase64 = `data:image/png;base64,${image}`;
+//       }
+//       // If image is a file object, handle it as file and convert it to base64
+//       else if (image instanceof Blob) {
+//         const buffer = await image.arrayBuffer();  // Convert file to ArrayBuffer
+//         imageBase64 = `data:image/png;base64,${Buffer.from(buffer).toString("base64")}`;
+//       }
+//     }
   
-    try {
-      const newEmployee = {
-        name,
-        email,
-        mobile,
-        address,
-        image: imageBase64,  // If image exists, store the base64 string
-      };
+//     try {
+//       const newEmployee = {
+//         name,
+//         email,
+//         mobile,
+//         address,
+//         image: imageBase64,  // If image exists, store the base64 string
+//       };
   
-      const result = await db.collection('employees').insertOne(newEmployee);
-      return NextResponse.json(newEmployee, { status: 201 });
-    } catch (error) {
-      console.error("Error adding employee:", error);
-      return NextResponse.json({ error: "Error adding employee" }, { status: 500 });
-    }
+//       const result = await db.collection('employees').insertOne(newEmployee);
+//       return NextResponse.json(newEmployee, { status: 201 });
+//     } catch (error) {
+//       console.error("Error adding employee:", error);
+//       return NextResponse.json({ error: "Error adding employee" }, { status: 500 });
+//     }
+//   }
+  
+
+
+export async function POST(req) {
+  const db = await connectToDatabase();
+
+  // Parse the request body as FormData
+  const formData = await req.formData();  // Using the built-in `formData()` for multipart form
+
+  const name = formData.get('name');
+  const email = formData.get('email');
+  const mobile = formData.get('mobile');
+  const address = formData.get('address');
+  const image = formData.get('image');  // This should now be a base64 string
+
+  try {
+    const newEmployee = {
+      name,
+      email,
+      mobile,
+      address,
+      image,  // Directly store the base64 string
+    };
+
+    const result = await db.collection('employees').insertOne(newEmployee);
+    return NextResponse.json(newEmployee, { status: 201 });
+  } catch (error) {
+    console.error("Error adding employee:", error);
+    return NextResponse.json({ error: "Error adding employee" }, { status: 500 });
   }
-  
+}
+
